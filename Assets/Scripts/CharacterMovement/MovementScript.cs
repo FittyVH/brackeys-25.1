@@ -23,6 +23,7 @@ public class MovementScript : MonoBehaviour
 
     //section for setting variables
     [Header("Variables")]
+    [SerializeField] private float rotationSpeed;
     [SerializeField] private float speed;
 
 
@@ -60,6 +61,14 @@ public class MovementScript : MonoBehaviour
     private void FixedUpdate()
     {
         rb.linearVelocity = MoveInput * speed;
+
+        //if (MoveInput != Vector2.zero) 
+        //{
+        //    float angle = Mathf.Atan2(MoveInput.y, MoveInput.x) * Mathf.Rad2Deg;
+        //    Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
+        //    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
+        //}
+        
 
     }
 

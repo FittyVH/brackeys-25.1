@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -52,12 +53,14 @@ public class MovementScript : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        
+        rb.freezeRotation = true;
+
     }
 
     private void FixedUpdate()
     {
         rb.linearVelocity = MoveInput * speed;
+
     }
 
 }

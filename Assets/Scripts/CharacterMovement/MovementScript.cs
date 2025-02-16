@@ -73,7 +73,13 @@ public class MovementScript : MonoBehaviour
 
     private void FixedUpdate()
     {
+        PlayerMovement();
 
+    }
+
+    private void PlayerMovement()
+    {
+        //Movement
         if (DashInput & !isDashing & MoveInput != Vector2.zero)
         {
             StartCoroutine(DashTime());
@@ -83,15 +89,13 @@ public class MovementScript : MonoBehaviour
             rb.linearVelocity = MoveInput * speed;
         }
 
-
+        //Rotation
         if (MoveInput != Vector2.zero)
         {
             float angle = Mathf.Atan2(MoveInput.y, MoveInput.x) * Mathf.Rad2Deg;
             Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
         }
-
-
     }
 
 

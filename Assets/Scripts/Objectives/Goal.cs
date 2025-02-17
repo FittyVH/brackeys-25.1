@@ -1,21 +1,41 @@
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
+using System.Runtime.CompilerServices;
 
 public class Goal : MonoBehaviour
 {
+    [SerializeField] private float speed;
+    private Vector2[] targetPosition = {
+        new Vector2(-58.336998f, 17.1000004f),
+        new Vector2(-48.9099998f,14.1000004f),
+        new Vector2(-68.0100021f,22.7000008f)
+    };
+
     public TextMeshProUGUI text;
+    private bool isDetected = false;
+    private int currentTargetIndex = -1;
 
 
-    //private void Start()
-    //{
-    //    text = text.GetComponent<TextMeshPro>();
-    //}
+    private void FixedUpdate()
+    {
+        if (isDetected && currentTargetIndex < targetPosition.Length)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, targetPosition[currentTargetIndex], speed * Time.deltaTime);
+
+            if ((Vector2)transform.position == targetPosition[currentTargetIndex])
+            {
+                isDetected = false;
+            }
+        }
+    }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Capsule"))
         {
+            isDetected = true;
+            currentTargetIndex++;
             text.text = "Finished";
         }
     }

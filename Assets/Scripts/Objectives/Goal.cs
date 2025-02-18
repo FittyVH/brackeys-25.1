@@ -36,7 +36,11 @@ public class Goal : MonoBehaviour
         {
             isDetected = true;
             currentTargetIndex++;
-            text.text = "Finished";
+
+            if (currentTargetIndex >= targetPosition.Length)
+            {
+                text.text = "Finished";
+            }
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 public class Goal : MonoBehaviour
 {
-    [SerializeField] private float speed;
+    [SerializeField] private float speed = 10f;
     private Vector2[] targetPosition = {
         new Vector2(-58.336998f, 17.1000004f),
         new Vector2(-48.9099998f,14.1000004f),

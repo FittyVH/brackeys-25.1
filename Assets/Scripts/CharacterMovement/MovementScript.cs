@@ -1,4 +1,5 @@
 using System.Collections;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -21,6 +22,7 @@ public class MovementScript : MonoBehaviour
     //section for setting up components in the inspector
     [Header("Components")]
     private Rigidbody2D rb;
+    private PhotonView view;
 
     //section for setting variables
     [Header("Variables")]
@@ -69,6 +71,8 @@ public class MovementScript : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         rb.freezeRotation = true;
 
+        view = GetComponent<PhotonView>();
+
     }
 
     private void FixedUpdate()
@@ -79,22 +83,25 @@ public class MovementScript : MonoBehaviour
 
     private void PlayerMovement()
     {
-        //Movement
-        if (DashInput & !isDashing & MoveInput != Vector2.zero)
+        if (view.IsMine) 
         {
-            StartCoroutine(DashTime());
-        }
-        else
-        {
-            rb.linearVelocity = MoveInput * speed;
-        }
+            //Movement
+            if (DashInput & !isDashing & MoveInput != Vector2.zero)
+            {
+                StartCoroutine(DashTime());
+            }
+            else
+            {
+                rb.linearVelocity = MoveInput * speed;
+            }
 
-        //Rotation
-        if (MoveInput != Vector2.zero)
-        {
-            float angle = Mathf.Atan2(MoveInput.y, MoveInput.x) * Mathf.Rad2Deg;
-            Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
+            //Rotation
+            if (MoveInput != Vector2.zero)
+            {
+                float angle = Mathf.Atan2(MoveInput.y, MoveInput.x) * Mathf.Rad2Deg;
+                Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
+            }
         }
     }
 
